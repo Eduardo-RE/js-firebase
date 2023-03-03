@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Amazon Ember", sans-serif;
 }
 
 
@@ -31,7 +32,7 @@ body {
 /* ESTILOS FORMULARIO */
 .contenedor .div-formulario {
     width: 30%;
-    height: 250px;
+    height: 60%;
     margin: 15px 15px;
     background-color: rgb(36, 63, 219);
     display: flex;
@@ -57,9 +58,33 @@ body {
     align-items: center;
 }
 
-.contenedor .div-formulario form input,
+.contenedor .div-formulario form input {
+    width: 60%;
+    font-size: medium;
+    border-radius: 10px;
+    border-color: transparent;
+    outline: transparent;
+    padding: 10px 10px;
+    margin: 10px 10px;
+}
+
 .contenedor .div-formulario form button {
     width: 60%;
+    font-size: medium;
+    border-radius: 10px;
+    border-color: transparent;
+    font-weight: 600;
+    outline: transparent;
+    cursor: pointer;
+    padding: 10px 10px;
+    margin: 10px 10px;
+}
+
+.contenedor .div-formulario form button:hover {
+    width: 60%;
+    border-radius: 10px;
+    background-color: slategrey;
+    color: #fff;
     padding: 10px 10px;
     margin: 10px 10px;
 }
@@ -102,20 +127,31 @@ body {
 hr {
     width: 100%;
     height: 1px;
-}
+}          
 
 .btn {
     padding: 5px 10px;
     border: none;
     margin: 0 5px;
     color: white;
-    border-radius: 50px;
+    border-radius: 10px;
 }
 
 .btn-editar {
-    background-color: green;
+    background-color: #38ad09;
+    cursor: pointer;
+}
+
+.btn-editar:hover {
+    background-color: #27700a;
 }
 
 .btn-eliminar {
-    background-color: red;
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.btn-eliminar:hover {
+    background-color: rgb(170, 0, 0);
+    cursor: pointer;
 }
