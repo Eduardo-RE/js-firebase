@@ -1,55 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
-    <header>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>CRUD</title>
-        <link rel="stylesheet" href="./styles.css">
-    </header>
-    <body>
-        <div class="div-titulo">
-            <h1>CRUD</h1>
+  <header>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </header>
+  <body onload="limpiarHTML()">
+    <div class="div-titulo">
+      <h1>CRUD</h1>
+    </div>
+
+    <div class="contenedor">
+      <div class="div-formulario">
+        <h2>Formulario</h2>
+
+        <form action="#" id="formulario">
+          <input type="text" id="nombre" placeholder="Ingresa un nombre" />
+          <input type="text" id="puesto" placeholder="Ingresa el puesto" />
+          <input type="number" id="sueldo" placeholder="Ingresa el sueldo" />
+          <input
+            type="number"
+            id="numControl"
+            placeholder="Ingresa el numero de control"
+          />
+          <button type="submit" id="btnAgregar">Agregar</button>
+        </form>
+      </div>
+
+      <div class="div-listado">
+        <h2>Listado de empleados</h2>
+        <div class="div-empleados">
+          <table class="list" id="listaEmpleados">
+            <thead>
+              <tr>
+                
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
-        
-        <div class="contenedor">
-    
-            <div class="div-formulario">
-                <h2>Formulario</h2>
-    
-                <form action="#" id="formulario">
-                    <input type="text" id="nombre" placeholder="Ingresa un nombre">
-                    <input type="text" id="puesto" placeholder="Ingresa el puesto">
-                    <input type="number" id="sueldo" placeholder="Ingresa el sueldo">
-                    <input type="number" id="numControl" placeholder="Ingresa el numero de control">
-                    <button type="submit" id="btnAgregar">Agregar</button>
-                </form>
-            </div>
-    
-            <div class="div-listado">
-                <h2>Listado de empleados</h2>
-                <div class="div-empleados">
-                    <table class="list" id="listaEmpleados">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Puesto</th>
-                                <th>Sueldo</th>
-                                <th>Numero de control</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-    
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-    
-        </div>
-    
-        <script type="module" src="./index.js"></script>
-        <script type="module" src="./firebase.js"></script>
-        
-      </body>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+
+    <script src="./index.js" ></script>
+  </body>
 </html>

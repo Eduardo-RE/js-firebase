@@ -1,4 +1,14 @@
-import {push, ref, database} from './firebase'
+const firebaseConfig = {
+  apiKey: "AIzaSyBvWlhQSxX0akCfR_8wA-NO8WTZ2qrVYdE",
+  authDomain: "programacion-web-88779.firebaseapp.com",
+  databaseURL: "https://programacion-web-88779-default-rtdb.firebaseio.com/",
+  projectId: "programacion-web-88779",
+  storageBucket: "programacion-web-88779.appspot.com",
+  messagingSenderId: "862776094383",
+  appId: "1:862776094383:web:dcf14f8deb5789b8392e5a",
+  measurementId: "G-MNDZRH9FTY",
+};
+firebase.initializeApp(firebaseConfig);
 
 let listaEmpleados = [];
 
@@ -28,7 +38,7 @@ function validarFormulario(e) {
     nombreInput.value === "" ||
     puestoInput.value === "" ||
     sueldoInput.value === "" ||
-    numControlInput.value === "" 
+    numControlInput.value === ""
   ) {
     alert("Todos los campos se deben llenar");
     return;
@@ -44,14 +54,25 @@ function validarFormulario(e) {
     objEmpleado.sueldo = sueldoInput.value;
     objEmpleado.numControl = numControlInput.value;
 
-    push(ref(database, '/empleados'),{
-        id: objEmpleado.id,
-        nombre: objEmpleado.nombre,
-        puesto: objEmpleado.puesto,
-        sueldo: objEmpleado.sueldo,
-        numControl: objEmpleado.numControl
-    })
-
+    firebase
+      .database()
+      .ref("empleados/" + objEmpleado.id)
+      .set(
+        {
+          id: objEmpleado.id,
+          nombre: objEmpleado.nombre,
+          puesto: objEmpleado.puesto,
+          sueldo: objEmpleado.sueldo,
+          numControl: objEmpleado.numControl,
+        },
+        (error) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("data saved");
+          }
+        }
+      );
 
     agregarEmpleado();
   }
@@ -74,34 +95,41 @@ function limpiarObjeto() {
   objEmpleado.numControl = "";
 }
 
+mostrarEmpleados();
+
 function mostrarEmpleados() {
   limpiarHTML();
 
-  const divEmpleados = document.querySelector(".div-empleados");
+  var starCountRef = firebase.database().ref("empleados");
 
-  listaEmpleados.forEach((empleado) => {
-    const { id, nombre, puesto, sueldo, numControl } = empleado;
+  starCountRef.on("value", (snapshot) => {
+    const data = Object.keys(snapshot.val()).map((key) => snapshot.val()[key]);
+    const divEmpleados = document.querySelector(".div-empleados");
 
-    const parrafo = document.createElement("p");
-    parrafo.textContent = `${id} - ${nombre} - ${puesto} - ${sueldo} - ${numControl} -`;
-    parrafo.dataset.id = id;
+    data.forEach((empleado) => {
+      const { id, nombre, puesto, sueldo, numControl } = empleado;
 
-    const editarBoton = document.createElement("button");
-    editarBoton.onclick = () => cargarEmpleado(empleado);
-    editarBoton.textContent = "Editar";
-    editarBoton.classList.add("btn", "btn-editar");
-    parrafo.append(editarBoton);
+      const parrafo = document.createElement("p");
+      parrafo.textContent = `${id} - ${nombre} - ${puesto} - ${sueldo} - ${numControl} -`;
+      parrafo.dataset.id = id;
 
-    const eliminarBoton = document.createElement("button");
-    eliminarBoton.onclick = () => eliminarEmpleado(id);
-    eliminarBoton.textContent = "Eliminar";
-    eliminarBoton.classList.add("btn", "btn-eliminar");
-    parrafo.append(eliminarBoton);
+      const editarBoton = document.createElement("button");
+      editarBoton.onclick = () => cargarEmpleado(empleado);
+      editarBoton.textContent = "Editar";
+      editarBoton.classList.add("btn", "btn-editar");
+      parrafo.append(editarBoton);
 
-    const hr = document.createElement("hr");
+      const eliminarBoton = document.createElement("button");
+      eliminarBoton.onclick = () => eliminarEmpleado(id);
+      eliminarBoton.textContent = "Eliminar";
+      eliminarBoton.classList.add("btn", "btn-eliminar");
+      parrafo.append(eliminarBoton);
 
-    divEmpleados.appendChild(parrafo);
-    divEmpleados.appendChild(hr);
+      const hr = document.createElement("hr");
+
+      divEmpleados.appendChild(parrafo);
+      divEmpleados.appendChild(hr);
+    });
   });
 }
 
@@ -133,8 +161,30 @@ function editarEmpleado() {
       empleado.puesto = objEmpleado.puesto;
       empleado.sueldo = objEmpleado.sueldo;
       empleado.numControl = objEmpleado.numControl;
+
+      
     }
   });
+
+  firebase
+    .database()
+    .ref("empleados/" + objEmpleado.id)
+    .set(
+      {
+        id: objEmpleado.id,
+        nombre: objEmpleado.nombre,
+        puesto: objEmpleado.puesto,
+        sueldo: objEmpleado.sueldo,
+        numControl: objEmpleado.numControl,
+      },
+      (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("data saved");
+        }
+      }
+    );
 
   limpiarHTML();
   mostrarEmpleados();
@@ -146,7 +196,21 @@ function editarEmpleado() {
 }
 
 function eliminarEmpleado(id) {
-  listaEmpleados = listaEmpleados.filter((empleado) => empleado.id !== id);
+  firebase
+    .database()
+    .ref("empleados/" + id)
+    .set(
+      {
+       
+      },
+      (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("data saved");
+        }
+      }
+    );
 
   limpiarHTML();
   mostrarEmpleados();
@@ -158,3 +222,7 @@ function limpiarHTML() {
     divEmpleados.removeChild(divEmpleados.firstChild);
   }
 }
+
+const picame = () => {
+  console.log("picado");
+};
